@@ -14,33 +14,39 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    # 1. khởi tạo pygame, tạo screen
+    # Khởi tạo pygame, tạo screen
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     frames_rate = 60.0
     dt = 0  # stand for delta
 
-    # 2. tạo đối tượng Player
+    # Tạo group
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    # Thêm player thích hợp vào group
+    Player.containers = (updatable, drawable)
+
+    # Tạo đối tượng Player
     player_x = SCREEN_WIDTH / 2
     player_y = SCREEN_HEIGHT / 2
     player = Player(player_x, player_y)
 
-    # 3. vòng lặp while game:
+    # Vòng lặp while game:
     while True:
         # - Ghi log
         log_state()
-        # Thoát game nếu bắt được sự kiện
+        # - Thoát game nếu bắt được sự kiện
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         # - fill màn hình đen
         screen.fill("black")
-
-        player.update(dt)
-
+        # - Cập nhật vị trí player
+        updatable.update(dt)
         # - vẽ player
-        player.draw(screen)
+        for obj in drawable:
+            obj.draw(screen)
         # - flip màn hình
         pygame.display.flip()
         # - tính thời gian trôi qua giữa hai khung hình (dùng cho chuyển động mượt)
