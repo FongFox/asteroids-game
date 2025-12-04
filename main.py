@@ -36,6 +36,9 @@ def main():
                 return
         # - fill màn hình đen
         screen.fill("black")
+
+        player.update(dt)
+
         # - vẽ player
         player.draw(screen)
         # - flip màn hình
