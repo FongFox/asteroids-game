@@ -1,3 +1,4 @@
+import sys
 from sys import version
 
 import pygame
@@ -5,7 +6,7 @@ import pygame
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from logger import log_state
+from logger import log_event, log_state
 from player import Player
 
 
@@ -37,7 +38,6 @@ def main():
     frames_rate = 60.0
     dt = 0  # stand for delta
 
-    # Vòng lặp while game:
     while True:
         # - Ghi log
         log_state()
@@ -47,17 +47,20 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        # - Cập nhật vị trí player
         updatable.update(dt)
 
-        # - fill màn hình đen
+        for asteriod in asteroids:
+            if asteriod.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                input("Press Enter to quit...")  # waits in the terminal
+                sys.exit()
+
         screen.fill("black")
 
-        # - vẽ player
         for obj in drawable:
             obj.draw(screen)
 
-        # - flip màn hình
         pygame.display.flip()
 
         # - tính thời gian trôi qua giữa hai khung hình (dùng cho chuyển động mượt)
