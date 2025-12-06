@@ -60,6 +60,12 @@ def main():
                 input("Press Enter to quit...")  # waits in the terminal
                 sys.exit()
 
+            for shot in shots:
+                if shot.collides_with(asteriod):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    asteriod.kill()
+
         screen.fill("black")
 
         for obj in drawable:
