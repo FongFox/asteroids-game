@@ -57,14 +57,15 @@ def main():
             if asteriod.collides_with(player):
                 log_event("player_hit")
                 print("Game over!")
-                input("Press Enter to quit...")  # waits in the terminal
+                # input("Press Enter to quit...")  # waits in the terminal
                 sys.exit()
 
             for shot in shots:
                 if shot.collides_with(asteriod):
                     log_event("asteroid_shot")
                     shot.kill()
-                    asteriod.kill()
+                    # asteriod.kill()
+                    asteriod.split()
 
         screen.fill("black")
 
